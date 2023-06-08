@@ -1,5 +1,6 @@
 import paramiko
 import time
+from tqdm import tqdm
 
 myusername = 'endless'
 portnumber = '4200'
@@ -8,15 +9,30 @@ rebootwaittime = 600
 
 def execute_command(ssh, command):
     print(command)
-    stdin, stdout, stderr = ssh.exec_command(command)
+    stdin, stdout, stderr = ssh.exec_command(command, get_pty=True)
+    total_size = None
+    pbar = None
+
     while not stdout.channel.exit_status_ready():
         if stdout.channel.recv_ready():
             output = stdout.channel.recv(1024).decode('utf-8')
-            print(output, end='')
+
+            if pbar is None and "Length:" in output:
+                total_size = int(output.split("Length:")[1].split("(")[0].strip())
+                pbar = tqdm(total=total_size, unit="B", unit_scale=True)
+
+            if pbar is not None and ".........." in output:
+                pbar.update(10240)
+            else:
+                print(output, end='')
 
         if stderr.channel.recv_stderr_ready():
             error = stderr.channel.recv_stderr(1024).decode('utf-8')
             print(error, end='')
+
+    if pbar is not None:
+        pbar.close()
+
     print('\n')
 
 if __name__ == '__main__':
@@ -72,6 +88,8 @@ if __name__ == '__main__':
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'sudo -u ' + myusername + ' env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/GithubRealFan/cubit.git')
+    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+
     ssh.close()
 
 input("Done!, Press Enter to Exit......")
