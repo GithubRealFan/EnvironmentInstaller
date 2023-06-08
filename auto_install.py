@@ -59,6 +59,10 @@ if __name__ == '__main__':
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get -y install cuda')
     execute_command(ssh, 'source ~/.bashrc')
+    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+    time.sleep(600)
+    ssh.close()
+    ssh.connect('162.157.113.207', port = int(portnumber), username=myusername, password=mypassword)
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install npm -y')
@@ -79,7 +83,7 @@ if __name__ == '__main__':
     execute_command(ssh, 'pip install bittensor')
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
-    execute_command(ssh, 'sudo -u ' + myusername + ' env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/GithubRealFan/cubit.git')
+    execute_command(ssh, 'sudo -u ' + myusername + ' env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/GithubRealFan/simple.git')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
 
     ssh.close()
