@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install npm -y')
-    execute_command(ssh, 'npm install pm2 -g')
+    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S npm install pm2 -g')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S  -u endless env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/opentensor/cubit.git@v1.1.2')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install python3')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'git clone https://github.com/commune-ai/commune.git')
     execute_command(ssh, 'cd commune/')
-    execute_command(ssh, 'pip install -e .')
+    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S make install')
     execute_command(ssh, 'commune sync')
     execute_command(ssh, 'cd ..')
 
