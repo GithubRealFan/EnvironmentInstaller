@@ -17,14 +17,14 @@ def execute_command(ssh, command):
         if stdout.channel.recv_ready():
             output = stdout.channel.recv(1024).decode('utf-8')
 
-            if pbar is None and "Length:" in output:
-                total_size = int(output.split("Length:")[1].split("(")[0].strip())
-                pbar = tqdm(total=total_size, unit="B", unit_scale=True)
+            # if pbar is None and "Length:" in output:
+            #     total_size = int(output.split("Length:")[1].split("(")[0].strip())
+            #     pbar = tqdm(total=total_size, unit="B", unit_scale=True)
 
-            if pbar is not None and ".........." in output:
-                pbar.update(10240)
-            else:
-                print(output, end='')
+            # if pbar is not None and ".........." in output:
+            #     pbar.update(10240)
+            # else:
+            print(output, end='')
 
         if stderr.channel.recv_stderr_ready():
             error = stderr.channel.recv_stderr(1024).decode('utf-8')
