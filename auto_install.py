@@ -51,14 +51,14 @@ if __name__ == '__main__':
     portnumber = input('Port : ')
     mypassword = input("Password : ")
 
-    ssh = connect_ssh('myip', int(portnumber), myusername, mypassword)
+    ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
 #install drivers
-    ssh.connect('myip', port = int(portnumber), username=myusername, password=mypassword)
+    ssh.connect(myip, port = int(portnumber), username=myusername, password=mypassword)
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt upgrade')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install nvidia-driver-525')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
-    ssh = connect_ssh('myip', int(portnumber), myusername, mypassword)
+    ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
  
     execute_command(ssh, 'wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600')
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get -y install cuda')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
-    ssh = connect_ssh('myip', int(portnumber), myusername, mypassword)
+    ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install npm -y')
