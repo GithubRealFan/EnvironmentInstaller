@@ -94,6 +94,11 @@ if __name__ == '__main__':
     execute_command(ssh, 'cd ..')
 
     execute_command(ssh, 'sudo -S apt update', mypassword)
+    file_url="https://files.pythonhosted.org/packages/6b/0e/c640bda79e61766896fe16dfe0a3ab12b06ad50cf8814950518896dec0a5/torch-1.13.1-cp38-cp38-manylinux1_x86_64.whl"
+    file_name="torch-1.13.1-cp38-cp38-manylinux1_x86_64.whl"
+    execute_command(ssh, f'[ ! -f "{file_name}" ] &&  sudo -S wget "{file_url}" || echo "File {file_name} already exists. Skipping download."', mypassword)
+
+    execute_command(ssh, 'pip install torch-1.13.1-cp38-cp38-manylinux1_x86_64.whl')
     execute_command(ssh, 'pip install bittensor')
 
     execute_command(ssh, 'sudo -S apt update', mypassword)
