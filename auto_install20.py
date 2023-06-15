@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     file_url="https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2004-12-1-local12.1.1-530.30.02-1_amd64.deb"
     file_name="cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb"
-    execute_command(ssh, f'[ ! -f "{file_name}" ] && 'echo "' + mypassword + '" | sudo -S wget "{file_url}" || echo "File {file_name} already exists. Skipping download."')
+    execute_command(ssh, f'[ ! -f "{file_name}" ] &&  wget "{file_url}" || echo "File {file_name} already exists. Skipping download."')
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S dpkg -i cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S cp /var/cudapo-ubuntu2004-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/')
