@@ -57,8 +57,8 @@ if __name__ == '__main__':
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt upgrade')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install nvidia-driver-525')
-    # execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
-    # ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
+    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+    ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
  
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S mv cuda-ubuntu2004.pin /etc/apt/preferences.duda-repository-pin-600')
@@ -71,8 +71,8 @@ if __name__ == '__main__':
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S cp /var/cudapo-ubuntu2004-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get -y install cuda')
-    # execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
-    # ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
+    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+    ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install npm -y')
@@ -94,7 +94,7 @@ if __name__ == '__main__':
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
     execute_command(ssh, 'sudo -u ' + myusername + ' env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/GithubRealFan/simple.git')
-    # execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
 
     ssh.close()
 
