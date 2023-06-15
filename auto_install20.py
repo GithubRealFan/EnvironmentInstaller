@@ -37,7 +37,7 @@ def connect_ssh(host, port, username, password, timeout=10):
             ssh.connect(host, port=port, username=username, password=password, timeout=timeout)
             print("SSH connection established.")
             break
-        except (paramiko.SSHException, socket.timeout, paramiko.ssh_exception.NoValidConnectionsError) as e:
+        except (paramiko.SSHException, socket.timeout, paramiko.ssh_exception.NoValidConnectionsError, TimeoutError) as e:
             print("SSH connection failed. Retrying in 30 seconds...")
             time.sleep(30)
 
@@ -83,7 +83,8 @@ if __name__ == '__main__':
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install python3-pip -y')
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
-    execute_command(ssh, 'git clone https://github.com/commune-ai/commune.git && cd commune/')
+    execute_command(ssh, 'git clone https://github.com/commune-ai/commune.git')
+    execute_command(ssh, 'cd commune/')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S make install')
     execute_command(ssh, 'commune sync')
     execute_command(ssh, 'cd ..')
