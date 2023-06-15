@@ -7,8 +7,13 @@ myusername = 'endless'
 portnumber = '4200'
 mypassword = 'endless1234'
 rebootwaittime = 600
+# Mount the partition
+partition = "/dev/nvme0n1p3"
+mount_point = "/mnt/nvme0n1p3"
 
 def execute_command(ssh, command, password=None):
+    if mount_point:
+        command = f'cd {mount_point} && {command}'
     print(command)
     stdin, stdout, stderr = ssh.exec_command(command, get_pty=True)
     total_size = None
@@ -47,6 +52,10 @@ def connect_ssh(host, port, username, password, timeout=10):
 
     return ssh
 
+def mount_partition(ssh, partition, mount_point, password):
+    print(f"Mounting {partition} to {mount_point}")
+    execute_command(ssh, f'sudo -S mkdir -p {mount_point}', password)
+    execute_command(ssh, f'sudo -S mount {partition} {mount_point}', password)
 
 if __name__ == '__main__':
 
@@ -56,7 +65,9 @@ if __name__ == '__main__':
     mypassword = input("Password : ")
 
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
-#install drivers
+
+    mount_partition(ssh, partition, mount_point, mypassword)
+
     ssh.connect(myip, port = int(portnumber), username=myusername, password=mypassword)
     execute_command(ssh, 'sudo -S apt -y update', mypassword)
     execute_command(ssh, 'sudo -S apt -y upgrade', mypassword)
@@ -67,7 +78,7 @@ if __name__ == '__main__':
     execute_command(ssh, 'sudo -S wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin', mypassword)
     execute_command(ssh, 'sudo -S mv cuda-ubuntu2004.pin /etc/apt/preferences.duda-repository-pin-600', mypassword)
 
-    file_url="https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2004-12-1-local12.1.1-530.30.02-1_amd64.deb"
+    file_url="https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb"
     file_name="cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb"
     execute_command(ssh, f'[ ! -f "{file_name}" ] &&  sudo -S wget "{file_url}" || echo "File {file_name} already exists. Skipping download."', mypassword)
 
