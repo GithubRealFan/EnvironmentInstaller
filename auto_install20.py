@@ -16,11 +16,11 @@ def execute_command(ssh, command):
 
     while not stdout.channel.exit_status_ready():
         if stdout.channel.recv_ready():
-            output = stdout.channel.recv(2048).decode('utf-8')
+            output = stdout.channel.recv(100000).decode('utf-8')
             print(output, end='')
 
         if stderr.channel.recv_stderr_ready():
-            error = stderr.channel.recv_stderr(2048).decode('utf-8')
+            error = stderr.channel.recv_stderr(100000).decode('utf-8')
             print(error, end='')
 
     if pbar is not None:
