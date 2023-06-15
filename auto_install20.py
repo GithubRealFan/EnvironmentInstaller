@@ -8,11 +8,15 @@ portnumber = '4200'
 mypassword = 'endless1234'
 rebootwaittime = 600
 
-def execute_command(ssh, command):
+def execute_command(ssh, command, password=None):
     print(command)
     stdin, stdout, stderr = ssh.exec_command(command, get_pty=True)
     total_size = None
     pbar = None
+
+    if password is not None:
+        stdin.write(password + '\n')
+        stdin.flush()
 
     while not stdout.channel.exit_status_ready():
         if stdout.channel.recv_ready():
@@ -54,47 +58,47 @@ if __name__ == '__main__':
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
 #install drivers
     ssh.connect(myip, port = int(portnumber), username=myusername, password=mypassword)
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt upgrade')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install nvidia-driver-525')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+    execute_command(ssh, 'sudo -S apt update', mypassword)
+    execute_command(ssh, 'sudo -S apt upgrade', mypassword)
+    execute_command(ssh, 'sudo -S apt install nvidia-driver-525', mypassword)
+    execute_command(ssh, 'sudo -S reboot', mypassword)
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
  
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S mv cuda-ubuntu2004.pin /etc/apt/preferences.duda-repository-pin-600')
+    execute_command(ssh, 'sudo -S wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin', mypassword)
+    execute_command(ssh, 'sudo -S mv cuda-ubuntu2004.pin /etc/apt/preferences.duda-repository-pin-600', mypassword)
 
     file_url="https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2004-12-1-local12.1.1-530.30.02-1_amd64.deb"
     file_name="cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb"
-    execute_command(ssh, f'[ ! -f "{file_name}" ] &&  wget "{file_url}" || echo "File {file_name} already exists. Skipping download."')
+    execute_command(ssh, f'[ ! -f "{file_name}" ] &&  sudo -S wget "{file_url}" || echo "File {file_name} already exists. Skipping download."', mypassword)
 
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S dpkg -i cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S cp /var/cudapo-ubuntu2004-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get update')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt-get -y install cuda')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+    execute_command(ssh, 'sudo -S dpkg -i cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb', mypassword)
+    execute_command(ssh, 'sudo -S cp /var/cudapo-ubuntu2004-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/', mypassword)
+    execute_command(ssh, 'sudo -S apt-get update', mypassword)
+    execute_command(ssh, 'sudo -S apt-get -y install cuda', mypassword)
+    execute_command(ssh, 'sudo -S reboot', mypassword)
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
 
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install npm -y')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S npm install pm2 -')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S  -u endless env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/opentensor/cubit.git@v1.1.2')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install python3')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt install python3-pip -y')
+    execute_command(ssh, 'sudo -S apt update', mypassword)
+    execute_command(ssh, 'sudo -S apt install npm -y', mypassword)
+    execute_command(ssh, 'sudo -S npm install pm2 -', mypassword)
+    execute_command(ssh, 'sudo -S  -u endless env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/opentensor/cubit.git@v1.1.2', mypassword)
+    execute_command(ssh, 'sudo -S apt install python3', mypassword)
+    execute_command(ssh, 'sudo -S apt update', mypassword)
+    execute_command(ssh, 'sudo -S apt install python3-pip -y', mypassword)
 
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
+    execute_command(ssh, 'sudo -S apt update', mypassword)
     execute_command(ssh, 'git clone https://github.com/commune-ai/commune.git')
     execute_command(ssh, 'cd commune/')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S make install')
+    execute_command(ssh, 'sudo -S make install', mypassword)
     execute_command(ssh, 'commune sync')
     execute_command(ssh, 'cd ..')
 
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
+    execute_command(ssh, 'sudo -S apt update', mypassword)
     execute_command(ssh, 'pip install bittensor')
 
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S apt update')
-    execute_command(ssh, 'sudo -u ' + myusername + ' env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/GithubRealFan/simple.git')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S reboot')
+    execute_command(ssh, 'sudo -S apt update', mypassword)
+    execute_command(ssh, 'sudo -u ' + myusername + ' env PATH=$PATH:/usr/local/cuda/bin CUDA_HOME=/usr/local/cuda pip install git+https://github.com/GithubRealFan/simple.git', mypassword)
+    execute_command(ssh, 'sudo -S reboot', mypassword)
 
     ssh.close()
 
