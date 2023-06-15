@@ -63,7 +63,7 @@ if __name__ == '__main__':
     ssh.connect(myip, port = int(portnumber), username=myusername, password=mypassword)
     execute_command(ssh, 'sudo -S apt -y update', mypassword)
     execute_command(ssh, 'sudo -S apt -y upgrade', mypassword)
-    execute_command(ssh, 'sudo -S apt install nvidia-driver-470', mypassword)
+    execute_command(ssh, 'sudo -S apt install nvidia-driver-460', mypassword)
     execute_command(ssh, 'sudo -S reboot', mypassword)
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
  
