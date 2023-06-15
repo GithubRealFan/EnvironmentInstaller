@@ -52,7 +52,8 @@ if __name__ == '__main__':
     mypassword = input("Password : ")
 
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin')
-    execute_command(ssh, 'echo "' + mypassword + '" | sudo -S mv cuda-ubuntu2004.pin /etc/apt/preferences.duda-repository-pin-600')
+    execute_command('alex ALL=(ALL) NOPASSWD: /usr/bin/wget')
+    execute_command(ssh, 'sudo wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin')
+    ssh.close()
 
 input("Tested!, Press Enter to Exit......")
