@@ -58,8 +58,8 @@ if __name__ == '__main__':
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
 #install drivers
     ssh.connect(myip, port = int(portnumber), username=myusername, password=mypassword)
-    execute_command(ssh, 'sudo -S apt update', mypassword)
-    execute_command(ssh, 'sudo -S apt upgrade', mypassword)
+    execute_command(ssh, 'sudo -S apt -y update', mypassword)
+    execute_command(ssh, 'sudo -S apt -y upgrade', mypassword)
     execute_command(ssh, 'sudo -S apt install nvidia-driver-525', mypassword)
     execute_command(ssh, 'sudo -S reboot', mypassword)
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
     execute_command(ssh, 'sudo -S dpkg -i cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.deb', mypassword)
     execute_command(ssh, 'sudo -S cp /var/cudapo-ubuntu2004-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/', mypassword)
-    execute_command(ssh, 'sudo -S apt-get update', mypassword)
+    execute_command(ssh, 'sudo -S apt-get -y update', mypassword)
     execute_command(ssh, 'sudo -S apt-get -y install cuda', mypassword)
     execute_command(ssh, 'sudo -S reboot', mypassword)
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
