@@ -8,11 +8,15 @@ portnumber = '4200'
 mypassword = 'endless1234'
 rebootwaittime = 600
 
-def execute_command(ssh, command):
+def execute_command(ssh, command, password=None):
     print(command)
     stdin, stdout, stderr = ssh.exec_command(command, get_pty=True)
     total_size = None
     pbar = None
+
+    if password is not None:
+        stdin.write(password + '\n')
+        stdin.flush()
 
     while not stdout.channel.exit_status_ready():
         if stdout.channel.recv_ready():
@@ -52,8 +56,7 @@ if __name__ == '__main__':
     mypassword = input("Password : ")
 
     ssh = connect_ssh(myip, int(portnumber), myusername, mypassword)
-    execute_command('alex ALL=(ALL) NOPASSWD: /usr/bin/wget')
-    execute_command(ssh, 'sudo wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin')
+    execute_command(ssh, 'sudo -S wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin', mypassword)
     ssh.close()
 
 input("Tested!, Press Enter to Exit......")
