@@ -1,3 +1,4 @@
+
 import subprocess
 import os
 import getpass
@@ -27,6 +28,18 @@ class VMManager:
         # Execute the virt-install command to create the VM
         subprocess.run(command)
 
+def create_folder():
+    folder_name = "vm_disks"
+    home_dir = os.path.expanduser("~")
+    folder_path = os.path.join(home_dir, folder_name)
+
+    # Check if the folder already exists
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Folder '{folder_name}' created successfully at: {folder_path}")
+    else:
+        print(f"Folder '{folder_name}' already exists at: {folder_path}")
+
 def create_empty_disk_image(disk_path, size_gb):
     command = ['qemu-img', 'create', '-f', 'qcow2', disk_path, str(size_gb) + 'G']
     subprocess.run(command)
@@ -39,7 +52,7 @@ def run_basic_tests():
     username = getpass.getuser()
     disk_path = "/home/" + username + "/vm_disks/vm1.qcow2"
     if not os.path.exists(disk_path):
-        create_empty_disk_image(disk_path, 20)
+        create_empty_disk_image(disk_path, 20)  # Create a 20GB disk image
     vcpu_count = 2
 
     vm_manager.create_vm(vm_name, disk_path, memory_size, vcpu_count)
@@ -49,7 +62,7 @@ def run_basic_tests():
     vm_name = "vm2"
     disk_path = "/home/" + username + "/vm_disks/vm2.qcow2"
     if not os.path.exists(disk_path):
-        create_empty_disk_image(disk_path, 20)
+        create_empty_disk_image(disk_path, 20)  # Create a 20GB disk image
     memory_size = 4096
     vcpu_count = 4
 
