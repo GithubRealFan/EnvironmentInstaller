@@ -44,6 +44,8 @@ def create_empty_disk_image(disk_path, size_gb):
     command = ['qemu-img', 'create', '-f', 'qcow2', disk_path, str(size_gb) + 'G']
     subprocess.run(command)
 
+global vm_name, disk_path, memory_size, vcpu_count
+
 def run_basic_tests():
     vm_manager = VMManager()
 
