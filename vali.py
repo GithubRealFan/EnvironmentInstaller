@@ -31,14 +31,14 @@ def update_weights(
     validator_weights = [neuron.consensus for neuron in neurons]
 
     validators = {
-        1: [("ONE", "9")],
-        3: [("ONE", "9")],
-        11: [("ONE", "9")],
-        21: [("ONE", "9")],
+        1: [("test", "test1")],
+        3: [("test", "test1")],
+        11: [("test", "test1")],
+        21: [("test", "test1")],
     }
 
     for name, hotkeys in {
-        "ONE": {"9": 0}
+        "test": {"test1": 0}
     }.items():
         for hotkey, _ in hotkeys.items():
             wallet = bittensor.wallet(name=name, hotkey=hotkey)
