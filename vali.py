@@ -78,8 +78,6 @@ def main():
             print(netuid)
             neurons = subtensor.neurons_lite(netuid=netuid)
             print("updating...", netuid, rate_limit)
-            if netuid == 21:
-                continue
             update_weights(subtensor, neurons, netuid, rate_limit)
 
     blocks_per_epoch = 300
