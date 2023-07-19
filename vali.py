@@ -64,11 +64,14 @@ def update_weights(
 
 def main():
     subtensor = bittensor.subtensor()
-    print("subtensor : " + subtensor)
+    print("subtensor :")
+    print(subtensor)
     rate_limit = subtensor.tx_rate_limit()
-    print("rate_limit : " + rate_limit)
+    print("rate_limit :")
+    print(subtensor)
     subnets = subtensor.get_subnets()
-    print("subnets : " + subnets)
+    print("subtensor :")
+    print(subnets)
 
     def update_all():
         for netuid in subnets:
