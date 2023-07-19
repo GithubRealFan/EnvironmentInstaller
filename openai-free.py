@@ -8,6 +8,6 @@ def run_bito(input_text):
     return output
 
 # Example usage
-input_prompt = "What is the best"
+input_prompt = input("InputText: ")
 output = run_bito(input_prompt)
 print(output)
