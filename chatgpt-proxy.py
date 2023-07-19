@@ -4,7 +4,7 @@ import openai
 app = Flask(__name__)
 
 # Set your OpenAI API key here
-api_key = "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"
+api_key = "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"
 openai.api_key = api_key
 
 @app.route('/chat', methods=['POST'])
