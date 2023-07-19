@@ -70,12 +70,14 @@ def main():
     print("rate_limit :")
     print(subtensor)
     subnets = subtensor.get_subnets()
-    print("subtensor :")
+    print("subnets :")
     print(subnets)
 
     def update_all():
         for netuid in subnets:
             neurons = subtensor.neurons_lite(netuid=netuid)
+            print("updating...")
+            print(netuid, neurons, rate_limit)
             update_weights(subtensor, neurons, netuid, rate_limit)
 
     blocks_per_epoch = 300
