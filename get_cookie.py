@@ -1,6 +1,6 @@
 import requests
 
-url = 'https://chat.openai.com'  # Replace with the URL of the website you want to request.
+url = 'https://chat.openai.com/chat'  # Replace with the URL of the website you want to request.
 
 # Send the HTTP request to the website and capture the response.
 response = requests.get(url)
