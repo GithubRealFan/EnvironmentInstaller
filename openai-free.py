@@ -1,6 +1,6 @@
 from pyChatGPT import ChatGPT
 
-api = ChatGPT(auth_type='google', email='daviddibella79@gmail.com', password='Zara1235')
+api = ChatGPT(auth_type='openai', captcha_solver=None, email='topdevstarsup@gmail.com', password='Kutengine227$$$')
 
 resp = api.send_message('Hello, world!')
 print(resp['message'])
