@@ -75,6 +75,7 @@ def main():
 
     def update_all():
         for netuid in subnets:
+            print(netuid)
             neurons = subtensor.neurons_lite(netuid=netuid)
             print("updating...", netuid, rate_limit)
             if netuid == 21:
@@ -89,6 +90,8 @@ def main():
         print("block_numbers : ", current_block, end_block)
 
         update_all()
+
+        print("updated")
 
         while end_block >= current_block:
             time.sleep(12)
