@@ -76,14 +76,15 @@ def main():
     def update_all():
         for netuid in subnets:
             neurons = subtensor.neurons_lite(netuid=netuid)
-            print("updating...")
-            print(netuid, neurons, rate_limit)
+            print("updating...", netuid, neurons)
             update_weights(subtensor, neurons, netuid, rate_limit)
 
     blocks_per_epoch = 300
     while True:
         current_block = subtensor.block
         end_block = current_block + blocks_per_epoch
+
+        print(current_block, end_block)
 
         update_all()
 
