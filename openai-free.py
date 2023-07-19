@@ -1,10 +1,13 @@
-from pyChatGPT import ChatGPT
+import subprocess
 
-api = ChatGPT(auth_type='openai', email='topdevstarsup@gmail.com', password='Kutengine227$$$')
+def run_bito(input_text):
+    command = ['bito']
+    process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate(input_text.encode())
+    output = stdout.decode().strip()
+    return output
 
-resp = api.send_message('Hello, world!')
-print(resp['message'])
-
-api.reset_conversation()  # reset the conversation
-api.clear_conversations()  # clear all conversations
-api.refresh_chat_page()  # refresh the chat page
+# Example usage
+input_prompt = "What is the best"
+output = run_bito(input_prompt)
+print(output)
