@@ -8,6 +8,8 @@ response = requests.get(url)
 # Get the cookies from the response object.
 cookies = response.cookies
 
+print(cookies)
+
 # Access the specific cookie by name.
 session_token_cookie = cookies.get('__Secure-next-auth.session-token')
 
