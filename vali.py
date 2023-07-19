@@ -96,6 +96,7 @@ def main():
         while end_block >= current_block:
             time.sleep(12)
             current_block = subtensor.block
+            print(end_block - current_block)
 
 
 if __name__ == "__main__":
