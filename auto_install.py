@@ -62,8 +62,8 @@ if __name__ == '__main__':
  
     execute_command(ssh, 'wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin')
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600')
-    file_url="https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2204-12-1-local_12.1.1-530.30.02-1_amd64.deb"
-    file_name="cuda-repo-ubuntu2204-12-1-local_12.1.1-530.30.02-1_amd64.deb"
+    file_url="https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2204-11-7-local_11.7.1-530.30.02-1_amd64.deb"
+    file_name="cuda-repo-ubuntu2204-11-7-local_11.7.1-530.30.02-1_amd64.deb"
     execute_command(ssh, f'[ ! -f "{file_name}" ] && wget "{file_url}" || echo "File {file_name} already exists. Skipping download."')
 
     execute_command(ssh, 'echo "' + mypassword + '" | sudo -S dpkg -i cuda-repo-ubuntu2204-12-1-local_12.1.1-530.30.02-1_amd64.deb')
